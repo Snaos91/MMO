@@ -1,0 +1,33 @@
+{% extends 'index.html' %}
+    {% block content %}
+            {{ message.created_at | date:'H:m d.M.Y' }}
+            <br>
+            Автор: {{ message.user }}
+            <br>
+    <h3> {{ message.title }} </h3>
+    <h3> Описание:</h3>
+
+        {{ message.content }}
+        <br>
+        <div>
+            <br>
+            <br>
+            <div>
+                <form method="GET">
+                    <a href="{% url 'reaction_create' %}?id={{message.id}}" class="btn btn-primary">Оставить отклик</a>
+                    </form>
+            </div>
+            <h3>Отклики:</h3>
+            {% for i in reaction %}
+                <div>
+                    {{ i.user }}
+                    <br>
+                    {{ i.text }}
+                    <hr>
+                </div>
+                <hr>
+            {% endfor %}
+
+        </div>
+
+    {% endblock content %}

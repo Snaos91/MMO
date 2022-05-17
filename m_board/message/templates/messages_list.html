@@ -1,0 +1,24 @@
+{% extends 'index.html' %}
+
+
+{% block content %}
+
+<div class="container mt-3">
+    {% for i in message %}
+        <div class="card mb-3">
+          <div class="card-header">
+            {{ i.user }}
+          </div>
+          <div class="card-body">
+            <h5 class="card-title">{{ i.title }}</h5>
+            <p class="card-text">Категория: {{ i.category }}</p>
+            <a href="{% url 'message_detail' i.id %}" class="btn btn-primary">Подробнее</a>
+          </div>
+          <div class="card-footer text-muted">
+            {{ i.created_at  }}
+          </div>
+        </div>
+    {% endfor %}
+</div>
+
+{% endblock content %}
