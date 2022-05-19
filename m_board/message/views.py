@@ -1,8 +1,9 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
-from django.urls import reverse
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
+from django_filters.views import FilterView
 
+from .filters import MessageFilter
 from .forms import MessageForm, ReactionForm
 from .models import Message, Reaction
 
@@ -49,16 +50,17 @@ class MessageDetailView(DetailView):
         return context
 
 
-class ReactionListView(ListView):
+class ReactionView(FilterView):
     model = Reaction
     template_name = 'reaction_list.html'
     context_object_name = 'reaction'
+    filterset_class = MessageFilter
 
-    def get_context_data(self, **kwargs):
+    def get_queryset(self):
         user = self.request.user
-        context = super(ReactionListView, self).get_context_data(**kwargs)
-        context['reaction'] = Reaction.objects.filter(user=user)
-        return context
+        messages = Message.objects.filter(user=user)
+        qs = Reaction.objects.filter(message__in=messages)
+        return qs
 
 
 def to_publish(request, **kwargs):
