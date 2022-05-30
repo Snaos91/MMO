@@ -1,0 +1,21 @@
+{% extends 'index.html' %}
+    {% block content %}
+        {{ message.title }}
+        <br>
+        <br>
+        <h6> Описание:</h6>
+        {{ message.content }}
+        <br>
+        <br>
+        <div>
+            <form method="POST">
+            {% csrf_token %}
+            <input type="submit" value="Подтвердить">
+            </form>
+
+            <form action="{% url 'message_personal' %}">
+            <button type="submit">Отмена</button>
+            </form>
+        </div>
+
+    {% endblock content %}

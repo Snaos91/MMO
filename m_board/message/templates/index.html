@@ -19,9 +19,21 @@
         <a class="nav-link" href="{% url 'message_create' %}">Добавить объявление</a>
         </li>
         <li class="nav-item">
+        <a class="nav-link" href="{% url 'message_personal' %}">Мои объявления</a>
+        </li>
+        <li class="nav-item">
         <a class="nav-link" href="{% url 'reaction_list' %}">Отклики на мои объявления</a>
         </li>
     </ul>
+      <span class="navbar-text">
+
+          {% if request.user.is_authenticated %}
+            {{ request.user }}<a class="nav-link" href="{% url 'logout' %}">Выйти</a>
+          {% else %}
+            <a class="nav-link" href="{% url 'register' %}">Регистрация</a><a class="nav-link" href="{% url 'login' %}">Авторизация</a>
+          {% endif %}
+
+      </span>
   </div>
 </nav>
 
